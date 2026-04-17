@@ -13,7 +13,6 @@ import { Toaster } from 'react-hot-toast';
 
 
 
-
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
 
@@ -32,8 +31,7 @@ const App = () => {
 
 
   return (
-
-    <div>
+    <div data-theme="dark">
 
       <Navbar />
 
