@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 import authRoutes from "../routes/auth.route.js";
 import messageRoutes from "../routes/message.route.js";
 import cookieParser from "cookie-parser";
-import { connectDB } from "../lib/db.js";
+import { connectDB } from "./lib/db.js";
+import { app, server } from "./lib/socket.js";
 
 // Dotenv configuration
 dotenv.config();
 
 //Initialize app and port
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares and routes
@@ -34,7 +34,7 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
   } catch (error) {
