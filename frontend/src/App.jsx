@@ -9,12 +9,16 @@ import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import SettingsPage from './pages/SettingsPage';
 import { Toaster } from 'react-hot-toast';
+import { useThemeStore } from './store/useThemeStore.js';
 
 
 
 
 const App = () => {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { theme } = useThemeStore();
+
+  console.log({onlineUsers});
 
   useEffect(() => {
     checkAuth();
@@ -31,7 +35,7 @@ const App = () => {
 
 
   return (
-    <div data-theme="dark">
+    <div data-theme={theme}>
 
       <Navbar />
 
