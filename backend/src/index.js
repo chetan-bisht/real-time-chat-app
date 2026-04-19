@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import authRoutes from "../routes/auth.route.js";
-import messageRoutes from "../routes/message.route.js";
+import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import { app, server } from "./lib/socket.js";
@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middlewares and routes
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "http://localhost:5174"],
   credentials: true
 }));
 app.use(express.json());

@@ -5,9 +5,9 @@ import { generateToken } from "../lib/utils.js";
 
 export const signup = async(req, res) => {
 
-    const { email, username, password } = req.body;
+    const { email, fullName, password } = req.body;
 
-    if (!email || !username || !password) {
+    if (!email || !fullName || !password) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -26,7 +26,7 @@ export const signup = async(req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            username : username,
+            fullName : fullName,
             email : email,
             password : hashedPassword
         });
@@ -34,7 +34,13 @@ export const signup = async(req, res) => {
         if (newUser) {
             generateToken(newUser._id, res);
             await newUser.save();
-            res.status(201).json({ message: "User created successfully" });
+            res.status(201).json({
+                _id : newUser._id,
+                fullName : newUser.fullName,
+                email : newUser.email,
+                profilePic : newUser.profilePic,
+                createdAt : newUser.createdAt
+            });
         } else {
             res.status(400).json({ message: "Invalid user data" });
         }
@@ -66,11 +72,11 @@ export const login = async (req, res) => {
 
         generateToken(user._id, res);
         res.status(200).json({
-            message : "Login successful",
             _id : user._id,
-            username : user.username,
+            fullName : user.fullName,
             email : user.email,
-            profilePicture : user.profilePicture
+            profilePic : user.profilePic,
+            createdAt : user.createdAt
         });
     } catch (error) {
         console.log("Error in login controller", error.message);
@@ -91,16 +97,16 @@ export const logout = (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const {profilePicture} = req.body;
+        const {profilePic} = req.body;
         const userId = req.user._id;
 
-        if (!profilePicture) {
+        if (!profilePic) {
             return res.status(400).json({ message: "Profile picture is required" });
         }
 
-        const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
 
-        const updatedUser = await User.findByIdAndUpdate(userId, {profilePicture: uploadResponse.secure_url},{new : true});
+        const updatedUser = await User.findByIdAndUpdate(userId, {profilePic: uploadResponse.secure_url},{new : true});
 
         res.status(200).json(updatedUser);
     } catch (error) {

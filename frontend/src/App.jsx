@@ -1,8 +1,8 @@
 ﻿import React, { useEffect } from 'react';
-import useAuthStore from './store/useAuthStore.js';
+import { useAuthStore } from './store/useAuthStore.js';
 import {Loader, Loader2, Loader2Icon, LoaderCircle} from 'lucide-react';
 import Navbar from './components/Navbar';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, Navigate} from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SignUpPage from './pages/SignUpPage';
 import LoginPage from './pages/LoginPage';
