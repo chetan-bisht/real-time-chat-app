@@ -2,8 +2,8 @@
 
 A full-stack, real-time chat application featuring instant messaging, online status tracking, and a highly customizable UI with 32 built-in themes.
 
-**Live Demo**
-[View Live Application](#)
+🚀 **Live Demo**  
+[View Live Application](https://real-time-chat-app-7kmf.onrender.com)
 
 *Note: The app is hosted on Render's free tier. If the app hasn't been accessed recently, the first load may take 30-50 seconds as the server wakes up.*
 
@@ -45,7 +45,7 @@ A full-stack, real-time chat application featuring instant messaging, online sta
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/chat-app.git
+   git clone https://github.com/chetan-bisht/real-time-chat-app.git
    cd chat-app
    ```
 
