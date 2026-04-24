@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import { useChatStore } from "../store/useChatStore";
-import { Image, Send, X } from "lucide-react";
+import { Image, Send, Sparkles, X, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, polishMessage } = useChatStore();
+  const [isPolishing, setIsPolishing] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -26,6 +27,14 @@ const MessageInput = () => {
   const removeImage = () => {
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handlePolish = async () => {
+    if (!text.trim()) return;
+    setIsPolishing(true);
+    const result = await polishMessage(text.trim());
+    setText(result);
+    setIsPolishing(false);
   };
 
   const handleSendMessage = async (e) => {
@@ -93,6 +102,20 @@ const MessageInput = () => {
             onClick={() => fileInputRef.current?.click()}
           >
             <Image size={20} />
+          </button>
+
+          <button
+            type="button"
+            className={`btn btn-circle ${isPolishing ? "animate-pulse" : "text-amber-500"}`}
+            onClick={handlePolish}
+            disabled={isPolishing || !text.trim()}
+            title="AI Polish"
+          >
+            {isPolishing ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : (
+              <Sparkles className="size-5" />
+            )}
           </button>
         </div>
         <button

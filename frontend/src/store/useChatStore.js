@@ -65,4 +65,14 @@ export const useChatStore = create((set, get) => ({
   },
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+  
+  polishMessage: async (text) => {
+    try {
+      const res = await axiosInstance.post("/ai/polish", { text });
+      return res.data.polishedText;
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Failed to polish message");
+      return text;
+    }
+  },
 }));
