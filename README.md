@@ -1,8 +1,8 @@
 # Real-Time Chat Application
 
-A full-stack, real-time chat application featuring instant messaging, online status tracking, and a highly customizable UI with 32 built-in themes.
+A full-stack, real-time chat application featuring instant messaging, online status tracking, AI-powered message polishing, and a highly customizable UI with 32 built-in themes.
 
-🚀 **Live Demo**  
+**Live Demo**  
 [View Live Application](https://real-time-chat-app-7kmf.onrender.com)
 
 *Note: The app is hosted on Render's free tier. If the app hasn't been accessed recently, the first load may take 30-50 seconds as the server wakes up.*
@@ -11,6 +11,7 @@ A full-stack, real-time chat application featuring instant messaging, online sta
 
 - **Real-Time Messaging**: Instant communication powered by Socket.io.
 - **Online Status**: Real-time tracking of which users are currently online.
+- **AI Message Polish** ✨: Click the sparkle button to auto-correct grammar, spelling, and clarity of your message using Groq's Llama 3.3-70B model — before you hit send.
 - **Profile Management**: Customizable user profiles with image upload support via Cloudinary.
 - **32 Customizable Themes**: Switch between dozens of DaisyUI themes (Retro, Cyberpunk, Valentine, etc.).
 - **Authentication**: Secure Signup/Login using JWT and Bcrypt.js.
@@ -33,6 +34,7 @@ A full-stack, real-time chat application featuring instant messaging, online sta
 - **Socket.io** (Real-time communication)
 - **Cloudinary** (Image hosting)
 - **JWT** (Authentication)
+- **Groq SDK** (AI message polishing via Llama 3.3-70B)
 
 ## Getting Started
 
@@ -40,6 +42,7 @@ A full-stack, real-time chat application featuring instant messaging, online sta
 - **Node.js (v18+)**
 - **MongoDB database** (MongoDB Atlas recommended)
 - **Cloudinary Account** (For profile picture uploads)
+- **Groq API Key** (Free — get one at [console.groq.com](https://console.groq.com))
 
 ### Installation
 
@@ -63,6 +66,7 @@ A full-stack, real-time chat application featuring instant messaging, online sta
    CLOUDINARY_CLOUD_NAME=your_cloud_name
    CLOUDINARY_API_KEY=your_api_key
    CLOUDINARY_API_SECRET=your_api_secret
+   GROQ_API_KEY=your_groq_api_key
    PORT=3000
    NODE_ENV=development
    ```
@@ -100,7 +104,7 @@ chat-app/
 │   ├── src/
 │   │   ├── controllers/    # Route handlers
 │   │   ├── models/         # Mongoose schemas
-│   │   ├── routes/         # API routes
+│   │   ├── routes/         # API routes (auth, messages, ai)
 │   │   ├── lib/            # DB, Socket, and Cloudinary config
 │   │   └── index.js        # Server entry point
 └── README.md
@@ -120,16 +124,20 @@ chat-app/
 - `GET /api/messages/:id` - Get chat history with a user
 - `POST /api/messages/send/:id` - Send a new message
 
+### AI
+- `POST /api/ai/polish` - Polish a message using Groq's Llama 3.3-70B-Versatile model
+
 ## Deployment
 
 ### Deploy to Render
 1. **Set up MongoDB Atlas** and get your connection string.
 2. **Set up Cloudinary** and get your API credentials.
-3. **Deploy the Backend**:
+3. **Get a Groq API Key** from [console.groq.com](https://console.groq.com) (free tier available).
+4. **Deploy the Backend**:
    - Create a new **Web Service** on Render.
    - Connect your repo and set the root directory to `backend`.
-   - Add all environment variables from your `.env` file.
-4. **Deploy the Frontend**:
+   - Add all environment variables from your `.env` file, including `GROQ_API_KEY`.
+5. **Deploy the Frontend**:
    - Create a new **Static Site** on Render.
    - Set the root directory to `frontend`.
    - Build Command: `npm run build`
